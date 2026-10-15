@@ -1,11 +1,14 @@
 // Builds nothing: run `npm run build` first. Serves dist/ with `vite preview`,
 // opens it in headless Chromium and saves a screenshot to screenshots/.
+// Usage: node scripts/screenshot.mjs [output.png] [?query] [wait ms]
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright-core';
 
 const PORT = 4173;
-const OUTPUT = process.argv[2] ?? 'screenshots/showroom.png';
+const OUTPUT = process.argv[2] ?? 'screenshots/race.png';
+const QUERY = process.argv[3] ?? '';
+const WAIT_MS = Number(process.argv[4] ?? 1500);
 const executablePath = process.env.CHROMIUM_PATH ?? undefined;
 
 const waitForServer = async (url) => {
@@ -33,9 +36,10 @@ try {
   page.on('console', (message) => {
     if (message.type() === 'error') console.error('[page]', message.text());
   });
-  await page.goto(url);
-  await page.waitForFunction(() => window.drunkRaceReady === true, null, { timeout: 60_000 });
-  await page.waitForTimeout(1500);
+  await page.goto(`${url}${QUERY}`);
+  await page.waitForFunction(() => window.drunkRace?.ready === true, null, { timeout: 60_000 });
+  await page.waitForTimeout(WAIT_MS);
+  console.log('state', JSON.stringify(await page.evaluate(() => window.drunkRace?.snapshot())));
   mkdirSync('screenshots', { recursive: true });
   await page.screenshot({ path: OUTPUT });
   console.log(`saved ${OUTPUT}`);
