@@ -9,9 +9,24 @@
   </head>
   <body>
     <canvas id="game"></canvas>
-    <div id="title">
-      <h1>DRUNK<span>RACE</span></h1>
-      <p id="status">carregando…</p>
+    <div id="hud">
+      <div class="hud-logo">DRUNK<span>RACE</span></div>
+      <div class="hud-lap">
+        <div class="hud-label">Volta</div>
+        <div id="hud-lap" class="hud-value">1/3</div>
+        <div class="hud-label">Tempo</div>
+        <div id="hud-lap-time" class="hud-value hud-small">00:00.00</div>
+        <div class="hud-label">Melhor</div>
+        <div id="hud-best-lap" class="hud-value hud-small">--:--.--</div>
+      </div>
+      <div class="hud-speed">
+        <div id="hud-speed" class="hud-speed-value">0</div>
+        <div class="hud-label">km/h</div>
+      </div>
+      <div id="hud-help" class="hud-help">
+        W / ↑ acelerar · S / ↓ frear e ré · A D / ← → virar · Espaço freio de mão · R voltar à pista
+      </div>
+      <p id="status" class="hud-status">carregando…</p>
     </div>
     <script type="module" src="./src/main.ts"></script>
   </body>

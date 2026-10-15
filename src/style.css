@@ -3,18 +3,36 @@
   --cyan: #2ef2ff;
   --magenta: #ff2bd6;
   --text: #e9e6ff;
+  --muted: rgba(233, 230, 255, 0.6);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); }
 #game { display: block; width: 100%; height: 100%; }
-#title {
-  position: fixed; left: 0; right: 0; bottom: 8vh;
-  text-align: center; pointer-events: none;
-  font-family: system-ui, sans-serif;
+
+#hud { position: fixed; inset: 0; pointer-events: none; font-family: system-ui, sans-serif; }
+.hud-logo {
+  position: absolute; top: 20px; left: 24px;
+  font-weight: 900; font-style: italic; letter-spacing: 0.08em; font-size: 1.4rem;
+  color: var(--cyan); text-shadow: 0 0 10px var(--cyan);
 }
-#title h1 {
-  font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 900; letter-spacing: 0.08em; font-style: italic;
-  color: var(--cyan); text-shadow: 0 0 12px var(--cyan), 0 0 40px rgba(46, 242, 255, 0.5);
+.hud-logo span { color: var(--magenta); text-shadow: 0 0 10px var(--magenta); margin-left: 0.25em; }
+.hud-lap {
+  position: absolute; top: 20px; right: 24px; text-align: right;
+  display: grid; grid-template-columns: auto auto; gap: 2px 14px; align-items: baseline;
 }
-#title h1 span { color: var(--magenta); text-shadow: 0 0 12px var(--magenta), 0 0 40px rgba(255, 43, 214, 0.5); margin-left: 0.3em; }
-#title p { margin-top: 0.5rem; opacity: 0.7; letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; }
+.hud-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+.hud-value { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 8px rgba(46, 242, 255, 0.6); }
+.hud-small { font-size: 1.05rem; }
+.hud-speed { position: absolute; right: 32px; bottom: 28px; text-align: right; }
+.hud-speed-value {
+  font-size: 4.5rem; font-weight: 900; font-style: italic; line-height: 1; font-variant-numeric: tabular-nums;
+  color: var(--cyan); text-shadow: 0 0 14px var(--cyan), 0 0 40px rgba(46, 242, 255, 0.4);
+}
+.hud-help {
+  position: absolute; left: 24px; bottom: 28px; max-width: 46ch;
+  font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+  transition: opacity 1.2s ease;
+}
+.hud-help.is-hidden { opacity: 0; }
+.hud-status { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; color: var(--muted); }
+.hud-status:empty { display: none; }
